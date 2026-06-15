@@ -1,19 +1,38 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Calendar Days</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <main class="container">
-      <div class="head">
-        <p id="previous-btn">previous</p>
-        <p id="month-year-text">previous</p>
-        <p id="next-btn">next</p>
-      </div>
-    </main>
-    <script src="script.js"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calendar Days</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <main class="calendar-container">
+    <div class="calendar">
+      <header class="calendar-header">
+        <button class="calendar-nav-prev" id="previous-btn">Previous</button>
+        <h2 class="calendar-title" id="month-year-text">Month Year</h2>
+        <button class="calendar-nav-next" id="next-btn">Next</button>
+      </header>
+
+      <section class="calendar__weekdays">
+        <div class="weekday">Sun</div>
+        <div class="weekday">Mon</div>
+        <div class="weekday">Tue</div>
+        <div class="weekday">Wed</div>
+        <div class="weekday">Thu</div>
+        <div class="weekday">Fri</div>
+        <div class="weekday">Sat</div>
+      </section>
+
+      <section class="calendar-days" id="calendar-days">
+       
+      </section>
+    </div>
+  </main>
+  <script src="script.js"></script>
+</body>
+
 </html>
