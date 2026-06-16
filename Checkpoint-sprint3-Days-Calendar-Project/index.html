@@ -4,34 +4,46 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calendar Days</title>
+  <title>Days Calendar Project</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
 </head>
 
 <body>
-  <main class="calendar-container">
-    <div class="calendar">
-      <header class="calendar-header">
-        <button class="calendar-nav-prev" id="previous-btn">Previous</button>
-        <h2 class="calendar-title" id="month-year-text">Month Year</h2>
-        <button class="calendar-nav-next" id="next-btn">Next</button>
-      </header>
-
-      <section class="calendar__weekdays">
-        <div class="weekday">Sun</div>
-        <div class="weekday">Mon</div>
-        <div class="weekday">Tue</div>
-        <div class="weekday">Wed</div>
-        <div class="weekday">Thu</div>
-        <div class="weekday">Fri</div>
-        <div class="weekday">Sat</div>
-      </section>
-
-      <section class="calendar-days" id="calendar-days">
-       
-      </section>
+  <main class="container">
+    <!-- ============ Previous and next icons -->
+    <div class="head">
+      <button class="pre-next-btn" id="previous-btn">
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+      <p id="month-year-text"></p>
+      <button class="pre-next-btn" id="next-btn">
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+    <!-- ============ Today's Details -->
+    <div class="today-box">
+      <p>Today</p>
+      <span id="todays-day-date"></span>
+    </div>
+    <!-- ============ Days of the week -->
+    <div class="days-of-week-box">
+      <ul class="days-of-week">
+        <li>Sun</li>
+        <li>Mon</li>
+        <li>Tue</li>
+        <li>Wed</li>
+        <li>Thu</li>
+        <li>Fri</li>
+        <li>Sat</li>
+      </ul>
+    </div>
+    <!-- ============ Dates of the month -->
+    <div class="dates-of-month">
+      <ul class="days-of-month" id="dates-of-month"></ul>
     </div>
   </main>
+  <!-- ============ Connecting js file -->
   <script src="script.js"></script>
 </body>
 
