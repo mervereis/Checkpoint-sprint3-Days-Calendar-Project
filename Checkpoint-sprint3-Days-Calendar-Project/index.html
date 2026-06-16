@@ -13,17 +13,17 @@
   <main class="container">
     <!-- ============ Previous and next icons -->
     <div style="width: 100%;">
-      <div class="head">
-        <button class="pre-next-btn" id="previous-btn">
+      <div class="head" role="navigation" aria-label="Calendar month navigation">
+        <button class="pre-next-btn" id="previous-btn" aria-label="Previous month">
           <i class="fa-solid fa-arrow-left"></i>
         </button>
-        <p id="month-year-text"></p>
-        <button class="pre-next-btn" id="next-btn">
+        <p id="month-year-text" aria-live="polite" aria-atomic="true"></p>
+        <button class="pre-next-btn" id="next-btn" aria-label="Next month">
           <i class="fa-solid fa-arrow-right"></i>
         </button>
       </div>
-      <div class="yearMonthSelectionWrapper">
-        <select name="monthSelect" id="monthsSelection">
+      <div class="yearMonthSelectionWrapper" role="group" aria-label="Month and year selection">
+        <select name="monthSelect" id="monthsSelection" aria-label="Select month">
           <option value="January">January</option>
           <option value="February">February</option>
           <option value="March">March</option>
@@ -37,7 +37,7 @@
           <option value="November">November</option>
           <option value="December">December</option>
         </select>
-        <select name="yearSelect" id="yearsSelection">
+        <select name="yearSelect" id="yearsSelection" aria-label="Select year">
           <option value="year">Year</option>
         </select>
       </div>
