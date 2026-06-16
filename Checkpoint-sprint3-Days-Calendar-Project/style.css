@@ -27,14 +27,18 @@ body {
   justify-content: space-between;
   padding: 30px;
 }
-.pre-next-icon {
+.pre-next-btn {
+  color: #3a3d3b;
   font-size: 20px;
   font-weight: bold;
   cursor: pointer;
   padding: 10px;
   border-radius: 50%;
+  border: none;
+  outline: none;
+  overflow: none;
 }
-.pre-next-icon:hover {
+.pre-next-btn:hover {
   background: #71aae8;
 }
 .head p {
@@ -100,5 +104,9 @@ body {
   border-radius: 5px;
 }
 .dates-of-month li:hover {
+  background: #71aae8;
+}
+
+.active {
   background: #71aae8;
 }

@@ -14,18 +14,18 @@
     <main class="container">
       <!-- ============ Previous and next icons -->
       <div class="head">
-        <span class="pre-next-icon" id="previous-btn"
-          ><i class="fa-solid fa-arrow-left"></i
-        ></span>
-        <p id="month-year-text">June, 2026</p>
-        <span class="pre-next-icon" id="next-btn"
-          ><i class="fa-solid fa-arrow-right"></i
-        ></span>
+        <button class="pre-next-btn" id="previous-btn">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        <p id="month-year-text"></p>
+        <button class="pre-next-btn" id="next-btn">
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
       </div>
       <!-- ============ Today's Details -->
       <div class="today-box">
         <p>Today</p>
-        <span id="todays-day-Date">Mon,15,June,2026</span>
+        <span id="todays-day-date"></span>
       </div>
       <!-- ============ Days of the week -->
       <div class="days-of-week-box">
@@ -41,15 +41,7 @@
       </div>
       <!-- ============ Dates of the month -->
       <div class="dates-of-month">
-        <ul class="days-of-month">
-          <li>1</li>
-          <li>2</li>
-          <li>3</li>
-          <li>4</li>
-          <li>5</li>
-          <li>6</li>
-          <li>7</li>
-        </ul>
+        <ul class="days-of-month" id="dates-of-month"></ul>
       </div>
     </main>
     <!-- ============ Connecting js file -->
