@@ -1,4 +1,4 @@
-import { events as specialDaysData } from "../eventData.js";
+import { events as specialDaysData } from "./eventData.js";
 
 // touch HTML elements;
 const monthAndYearText = document.getElementById("month-year-text");
