@@ -12,14 +12,35 @@
 <body>
   <main class="container">
     <!-- ============ Previous and next icons -->
-    <div class="head">
-      <button class="pre-next-btn" id="previous-btn">
-        <i class="fa-solid fa-arrow-left"></i>
-      </button>
-      <p id="month-year-text"></p>
-      <button class="pre-next-btn" id="next-btn">
-        <i class="fa-solid fa-arrow-right"></i>
-      </button>
+    <div style="width: 100%;">
+      <div class="head">
+        <button class="pre-next-btn" id="previous-btn">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        <p id="month-year-text"></p>
+        <button class="pre-next-btn" id="next-btn">
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+      <div class="yearMonthSelectionWrapper">
+        <select name="monthSelect" id="monthsSelection">
+          <option value="January">January</option>
+          <option value="February">February</option>
+          <option value="March">March</option>
+          <option value="April">April</option>
+          <option value="May">May</option>
+          <option value="June">June</option>
+          <option value="July">July</option>
+          <option value="August">August</option>
+          <option value="September">September</option>
+          <option value="October">October</option>
+          <option value="November">November</option>
+          <option value="December">December</option>
+        </select>
+        <select name="yearSelect" id="yearsSelection">
+          <option value="year">Year</option>
+        </select>
+      </div>
     </div>
     <!-- ============ Today's Details -->
     <div class="today-box">
@@ -42,9 +63,11 @@
     <div class="dates-of-month">
       <ul class="days-of-month" id="dates-of-month"></ul>
     </div>
+
   </main>
+  <div id="special-tooltip" class="tooltip"></div>
   <!-- ============ Connecting js file -->
-  <script src="script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 
 </html>
