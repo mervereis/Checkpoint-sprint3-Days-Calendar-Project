@@ -4,7 +4,7 @@ export const events = [
     monthName: "October",
     dayName: "Tuesday",
     occurrence: "second",
-    descriptionURL: "https://codeyourfuture.github.io/Checkpoint/days/ada.txt",
+    descriptionURL: "https://codeyourfuture.github.io/Checkpoint/days/ada.txt"
   },
   {
     name: "International Binturong Day",
@@ -12,7 +12,7 @@ export const events = [
     dayName: "Saturday",
     occurrence: "second",
     descriptionURL:
-      "https://codeyourfuture.github.io/Checkpoint/days/binturongs.txt",
+      "https://codeyourfuture.github.io/Checkpoint/days/binturongs.txt"
   },
   {
     name: "International Vulture Awareness Day",
@@ -20,7 +20,7 @@ export const events = [
     dayName: "Saturday",
     occurrence: "first",
     descriptionURL:
-      "https://codeyourfuture.github.io/Checkpoint/days/vultures.txt",
+      "https://codeyourfuture.github.io/Checkpoint/days/vultures.txt"
   },
   {
     name: "International Red Panda Day",
@@ -28,7 +28,7 @@ export const events = [
     dayName: "Saturday",
     occurrence: "third",
     descriptionURL:
-      "https://codeyourfuture.github.io/Checkpoint/days/red-pandas.txt",
+      "https://codeyourfuture.github.io/Checkpoint/days/red-pandas.txt"
   },
   {
     name: "World Lemur Day",
@@ -36,6 +36,6 @@ export const events = [
     dayName: "Friday",
     occurrence: "last",
     descriptionURL:
-      "https://codeyourfuture.github.io/Checkpoint/days/lemurs.txt",
-  },
+      "https://codeyourfuture.github.io/Checkpoint/days/lemurs.txt"
+  }
 ];

@@ -18,7 +18,7 @@ let month = dateObj.getMonth();
 let firstDayIndex = new Date(year, month, 1).getDay();
 
 const dayNames = dateObj.toLocaleDateString("en-GB", {
-  weekday: "long",
+  weekday: "long"
 });
 
 // =========== heading texts
@@ -37,7 +37,7 @@ const months = [
   "September",
   "October",
   "November",
-  "December",
+  "December"
 ];
 
 const currentMonth = month;
@@ -45,7 +45,7 @@ const currentYear = year;
 
 const monthNameToIndex = (monthName) => {
   return months.findIndex(
-    (name) => name.toLowerCase() === monthName.toLowerCase(),
+    (name) => name.toLowerCase() === monthName.toLowerCase()
   );
 };
 
@@ -57,10 +57,10 @@ const dayNameToIndex = (dayName) => {
     "Wednesday",
     "Thursday",
     "Friday",
-    "Saturday",
+    "Saturday"
   ];
   return dayNames.findIndex(
-    (name) => name.toLowerCase() === dayName.toLowerCase(),
+    (name) => name.toLowerCase() === dayName.toLowerCase()
   );
 };
 
@@ -70,7 +70,7 @@ const getOccurrenceIndex = (occurrence) => {
     second: 2,
     third: 3,
     fourth: 4,
-    last: -1,
+    last: -1
   };
   return mapping[occurrence.toLowerCase()] ?? 1;
 };
@@ -119,7 +119,7 @@ const getSpecialDaysForDisplayMonth = () => {
         return {
           day: dayNumber,
           name: specialDay.name,
-          descriptionURL: specialDay.descriptionURL,
+          descriptionURL: specialDay.descriptionURL
         };
       }
       return null;
@@ -172,7 +172,7 @@ const displayCalendar = () => {
   }
 
   const specialDateElements = document.querySelectorAll(
-    ".date-item.special-day",
+    ".date-item.special-day"
   );
   specialDateElements.forEach((dayElement) => {
     const name = dayElement.dataset.name;
@@ -193,7 +193,7 @@ const displayCalendar = () => {
   });
 
   const currentMonthName = new Date(year, month).toLocaleDateString("en-GB", {
-    month: "long",
+    month: "long"
   });
   monthAndYearText.textContent = `${currentMonthName}, ${year}`;
 };
