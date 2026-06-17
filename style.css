@@ -47,7 +47,7 @@ body {
   display: flex;
   justify-content: space-between; /* keeps prev left, next right */
   align-items: center;
-  padding: clamp(10px, 3vw, 20px);
+  padding: clamp(10px, 3vw, 15px);
 }
 
 /* Middle section: Today + selects */
@@ -250,13 +250,14 @@ body {
 /* =========================
    RESPONSIVE
 ========================= */
-@media (max-width: 480px) {
+@media (max-width: 580px) {
   .head {
     flex-direction: column;
     gap: 12px;
   }
 
   .pre-next-btn {
+    display: none;
     padding: 10px;
     font-size: 18px;
   }
