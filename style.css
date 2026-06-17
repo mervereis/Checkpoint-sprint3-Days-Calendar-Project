@@ -1,112 +1,189 @@
+/* =========================
+   RESET
+========================= */
 * {
-  padding: 0;
   margin: 0;
+  padding: 0;
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* =========================
+   BASE
+========================= */
 body {
   background: #3a3d3b;
   color: whitesmoke;
+  padding: clamp(10px, 2vw, 20px);
 }
+
+/* =========================
+   MAIN CONTAINER
+========================= */
 .container {
   background: #734f4f;
   width: 100%;
-  max-width: 578px;
-  height: auto;
+  max-width: 600px;
+  margin: 0 auto;
+  border-radius: 8px;
+
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  margin: 40px auto;
-  overflow-y: none;
-  border-radius: 5px;
+  overflow: hidden;
 }
+
+.container h1 {
+  padding: clamp(12px, 3vw, 20px) 10px;
+  text-align: center;
+  font-size: clamp(1.5rem, 4vw, 1.8rem);
+}
+
+/* =========================
+   HEADER (NAVIGATION)
+========================= */
 .head {
   width: 100%;
   display: flex;
-  justify-content: space-between;
-  padding: 30px;
+  justify-content: space-between; /* keeps prev left, next right */
+  align-items: center;
+  padding: clamp(10px, 3vw, 15px);
 }
+
+/* Middle section: Today + selects */
+.middle-controls {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 2vw, 15px); /* space between Today and the selects */
+}
+
+/* Month + Year spacing */
+.select-group {
+  display: flex;
+  gap: clamp(6px, 2vw, 10px); /* your requested spacing */
+  align-items: center;
+}
+
 .pre-next-btn {
-  color: #3a3d3b;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  padding: 10px;
-  border-radius: 50%;
+  padding: clamp(10px, 2vw, 12px);
   border: none;
-  outline: none;
-  overflow: none;
+  border-radius: 50%;
+  cursor: pointer;
+
+  font-size: clamp(18px, 3vw, 20px);
+  font-weight: bold;
+  color: #3a3d3b;
+  background: #e0e0e0;
+  transition: background 0.2s ease;
 }
+
 .pre-next-btn:hover {
   background: #71aae8;
 }
-.head p {
-  font-size: 25px;
+
+.today-btn {
+  display: none;
+  padding: clamp(10px, 2vw, 12px) clamp(12px, 3vw, 16px);
+  background: #71aae8;
+  border: none;
+  border-radius: 6px;
+  color: #3a3d3b;
   font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease;
 }
+
+.today-btn:hover {
+  background: #8bc0f5;
+}
+
+/* =========================
+   TODAY BOX
+========================= */
 .today-box {
-  width: 90%;
+  width: 92%;
   background: #5b3939;
-  padding: 10px;
-  border-radius: 5px;
+  padding: clamp(8px, 2vw, 12px);
+  border-radius: 6px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-.today-box p {
-  background: brown;
-  padding: 8px;
-  border-radius: 3px;
-}
-.today-box span {
-  font-weight: bold;
-  padding-right: 10px;
-  letter-spacing: 1px;
-}
-.days-of-week-box {
-  width: 100%;
-  padding: 10px;
-}
-.days-of-week {
-  width: 100%;
-  list-style-type: none;
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  padding: 10px;
-  margin: 0;
-  gap: 5px;
-  text-align: center;
-  font-weight: bold;
-}
-.days-of-week li {
-  border-bottom: 2px solid grey;
-  padding-bottom: 5px;
+  margin-bottom: 10px;
 }
 
+.today-box p {
+  background: brown;
+  padding: clamp(6px, 2vw, 8px) clamp(8px, 3vw, 12px);
+  border-radius: 4px;
+  font-size: clamp(0.75rem, 2vw, 0.9rem);
+}
+
+.today-box span {
+  font-weight: bold;
+  padding-right: clamp(6px, 2vw, 10px);
+  letter-spacing: 1px;
+  font-size: clamp(0.8rem, 2vw, 1rem);
+}
+
+/* =========================
+   WEEK DAYS
+========================= */
+.days-of-week-box {
+  width: 100%;
+  padding: clamp(6px, 2vw, 10px) 0;
+}
+
+.days-of-week {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: clamp(3px, 1vw, 6px);
+
+  padding: clamp(6px, 2vw, 10px);
+  text-align: center;
+  font-weight: bold;
+  font-size: clamp(0.75rem, 2vw, 0.9rem);
+}
+
+.days-of-week li {
+  border-bottom: 2px solid grey;
+  padding-bottom: clamp(4px, 1vw, 6px);
+}
+
+/* =========================
+   CALENDAR GRID
+========================= */
 .dates-of-month {
   width: 100%;
-  padding: 10px;
+  padding: clamp(6px, 2vw, 10px);
 }
+
 .days-of-month {
-  width: 100%;
-  list-style-type: none;
+  list-style: none;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  padding: 10px;
-  margin: 0;
-  gap: 5px;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: clamp(3px, 1vw, 6px);
+
+  padding: clamp(6px, 2vw, 10px);
   text-align: center;
   cursor: pointer;
 }
+
 .dates-of-month li {
-  padding: 12px;
-  border-radius: 5px;
+  padding: clamp(8px, 2vw, 12px);
+  border-radius: 6px;
+  font-size: clamp(0.8rem, 2vw, 1rem);
+  transition: background 0.2s ease;
 }
+
 .dates-of-month li:hover {
   background: #71aae8;
 }
 
+/* =========================
+   SPECIAL DAYS
+========================= */
 .date-item.special-day {
   background: #ffcc00;
   color: #3a3d3b;
@@ -114,23 +191,30 @@ body {
   position: relative;
 }
 
-.date-item.special-day .special-label {
+.special-label {
   margin-left: 4px;
-  font-size: 0.8rem;
+  font-size: clamp(0.7rem, 2vw, 0.8rem);
 }
 
+/* =========================
+   TOOLTIP
+========================= */
 .tooltip {
   position: absolute;
-  pointer-events: none;
-  background: rgba(0, 0, 0, 0.85);
-  color: #ffffff;
-  border-radius: 6px;
-  padding: 8px 10px;
-  font-size: 0.85rem;
-  line-height: 1.3;
-  max-width: 220px;
   z-index: 1000;
+
+  padding: clamp(6px, 2vw, 8px) clamp(8px, 2vw, 10px);
+  max-width: 220px;
+
+  font-size: clamp(0.75rem, 2vw, 0.85rem);
+  line-height: 1.3;
+
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  border-radius: 6px;
+
   opacity: 0;
+  pointer-events: none;
   transition: opacity 0.15s ease-in-out;
 }
 
@@ -138,24 +222,58 @@ body {
   opacity: 1;
 }
 
+/* =========================
+   ACTIVE STATE
+========================= */
 .active {
   background: #71aae8;
 }
 
-.yearMonthSelectionWrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem;
-  margin-bottom: 2rem;
+/* =========================
+   SELECTS
+========================= */
+#monthsSelection,
+#yearsSelection {
+  padding: clamp(10px, 2vw, 12px) clamp(12px, 3vw, 16px);
+  border-radius: 5px;
 
-  select {
-    min-width: 150px;
-    min-height: 40px;
-    font-size: larger;
-    padding: 0 10px;
-    font-weight: 500;
-    border-radius: 5px;
-    background-color: #dedede;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  font-weight: bold;
+  color: #3a3d3b;
+
+  outline: none;
+  border: none;
+  background: #e0e0e0;
+  cursor: pointer;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 580px) {
+  .head {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .pre-next-btn {
+    display: none;
+    padding: 10px;
+    font-size: 18px;
+  }
+
+  #monthsSelection,
+  #yearsSelection {
+    width: 100%;
+  }
+
+  .days-of-week li,
+  .dates-of-month li {
+    font-size: 0.8rem;
+    padding: 10px;
+  }
+
+  .container h1 {
+    font-size: 1.5rem;
   }
 }

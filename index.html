@@ -1,73 +1,71 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Days Calendar Project</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Days Calendar Project</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
-</head>
+  <body>
+    <main class="container">
+      <h1>Day Calendar</h1>
+      <!-- ============ Previous and next icons -->
+      <div style="width: 100%">
+        <div class="head">
+          <button
+            id="previous-btn"
+            class="pre-next-btn"
+            aria-label="Previous month"
+          >
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
 
-<body>
-  <main class="container">
-    <!-- ============ Previous and next icons -->
-    <div style="width: 100%;">
-      <div class="head" role="navigation" aria-label="Calendar month navigation">
-        <button class="pre-next-btn" id="previous-btn" aria-label="Previous month">
-          <i class="fa-solid fa-arrow-left"></i>
-        </button>
-        <p id="month-year-text" aria-live="polite" aria-atomic="true"></p>
-        <button class="pre-next-btn" id="next-btn" aria-label="Next month">
-          <i class="fa-solid fa-arrow-right"></i>
-        </button>
+          <div class="middle-controls">
+            <button id="today-btn" class="today-btn">Today</button>
+
+            <div class="select-group">
+              <label for="monthsSelection">Month:</label>
+              <select id="monthsSelection"></select>
+
+              <label for="yearsSelection">Year:</label>
+              <select id="yearsSelection"></select>
+            </div>
+          </div>
+
+          <button id="next-btn" class="pre-next-btn" aria-label="Next month">
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
       </div>
-      <div class="yearMonthSelectionWrapper" role="group" aria-label="Month and year selection">
-        <select name="monthSelect" id="monthsSelection" aria-label="Select month">
-          <option value="January">January</option>
-          <option value="February">February</option>
-          <option value="March">March</option>
-          <option value="April">April</option>
-          <option value="May">May</option>
-          <option value="June">June</option>
-          <option value="July">July</option>
-          <option value="August">August</option>
-          <option value="September">September</option>
-          <option value="October">October</option>
-          <option value="November">November</option>
-          <option value="December">December</option>
-        </select>
-        <select name="yearSelect" id="yearsSelection" aria-label="Select year">
-          <option value="year">Year</option>
-        </select>
+      <!-- ============ Today's Details -->
+      <div class="today-box">
+        <p>Today</p>
+        <span id="todays-day-date"></span>
       </div>
-    </div>
-    <!-- ============ Today's Details -->
-    <div class="today-box">
-      <p>Today</p>
-      <span id="todays-day-date"></span>
-    </div>
-    <!-- ============ Days of the week -->
-    <div class="days-of-week-box">
-      <ul class="days-of-week">
-        <li>Sun</li>
-        <li>Mon</li>
-        <li>Tue</li>
-        <li>Wed</li>
-        <li>Thu</li>
-        <li>Fri</li>
-        <li>Sat</li>
-      </ul>
-    </div>
-    <!-- ============ Dates of the month -->
-    <div class="dates-of-month">
-      <ul class="days-of-month" id="dates-of-month"></ul>
-    </div>
-
-  </main>
-  <div id="special-tooltip" class="tooltip"></div>
-  <!-- ============ Connecting js file -->
-  <script type="module" src="script.js"></script>
-</body>
-
+      <!-- ============ Days of the week -->
+      <div class="days-of-week-box">
+        <ul class="days-of-week">
+          <li>Sun</li>
+          <li>Mon</li>
+          <li>Tue</li>
+          <li>Wed</li>
+          <li>Thu</li>
+          <li>Fri</li>
+          <li>Sat</li>
+        </ul>
+      </div>
+      <!-- ============ Dates of the month -->
+      <div class="dates-of-month">
+        <ul class="days-of-month" id="dates-of-month"></ul>
+      </div>
+    </main>
+    <div id="special-tooltip" class="tooltip"></div>
+    <!-- ============ Connecting js file -->
+    <script type="module" src="script.js"></script>
+  </body>
 </html>

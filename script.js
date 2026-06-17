@@ -1,30 +1,29 @@
 import { events as specialDaysData } from "./eventData.js";
 
-// touch HTML elements;
-const monthAndYearText = document.getElementById("month-year-text");
-const todaysDayAndDate = document.getElementById("todays-day-date");
-const datesOfMonth = document.getElementById("dates-of-month");
-const btnElements = document.querySelectorAll(".pre-next-btn");
-const todaysInfoBox = document.querySelector(".today-box");
+/* =========================
+   DOM ELEMENTS
+========================= */
+const todayText = document.getElementById("todays-day-date");
+const calendarDays = document.getElementById("dates-of-month");
+const buttons = document.querySelectorAll(".pre-next-btn");
+const todayBox = document.querySelector(".today-box");
 const monthSelect = document.getElementById("monthsSelection");
 const yearSelect = document.getElementById("yearsSelection");
 const tooltip = document.getElementById("special-tooltip");
+const todayBtn = document.getElementById("today-btn");
 
-// =========== global variables;
-const dateObj = new Date();
-let year = dateObj.getFullYear();
-let date = dateObj.getDate();
-let month = dateObj.getMonth();
-let firstDayIndex = new Date(year, month, 1).getDay();
+/* =========================
+   DATE SETUP
+========================= */
+const now = new Date();
 
-const dayNames = dateObj.toLocaleDateString("en-GB", {
-  weekday: "long",
-});
+let year = now.getFullYear();
+let month = now.getMonth();
+let date = now.getDate();
 
-// =========== heading texts
-
-todaysDayAndDate.textContent = `${dayNames}, ${date}.${month + 1}.${year}`;
-
+/* =========================
+   CONSTANTS
+========================= */
 const months = [
   "January",
   "February",
@@ -37,222 +36,255 @@ const months = [
   "September",
   "October",
   "November",
-  "December",
+  "December"
 ];
 
-const currentMonth = month;
-const currentYear = year;
+const weekDays = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday"
+];
 
-const monthNameToIndex = (monthName) => {
-  return months.findIndex(
-    (name) => name.toLowerCase() === monthName.toLowerCase(),
-  );
-};
+/* =========================
+   TODAY TEXT
+========================= */
+const todayName = now.toLocaleDateString("en-GB", { weekday: "long" });
 
-const dayNameToIndex = (dayName) => {
-  const dayNames = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-  return dayNames.findIndex(
-    (name) => name.toLowerCase() === dayName.toLowerCase(),
-  );
-};
+todayText.textContent = `${todayName}, ${date}.${month + 1}.${year}`;
 
-const getOccurrenceIndex = (occurrence) => {
-  const mapping = {
+/* =========================
+   HELPER FUNCTIONS
+========================= */
+
+// convert month name → index
+const getMonthIndex = (name) =>
+  months.findIndex((m) => m.toLowerCase() === name.toLowerCase());
+
+// convert weekday name → index
+const getDayIndex = (name) =>
+  weekDays.findIndex((d) => d.toLowerCase() === name.toLowerCase());
+
+// convert "first, second, last..." → number
+const getOccurrence = (type) => {
+  const map = {
     first: 1,
     second: 2,
     third: 3,
     fourth: 4,
-    last: -1,
+    last: -1
   };
-  return mapping[occurrence.toLowerCase()] ?? 1;
+  return map[type?.toLowerCase()] ?? 1;
 };
 
-const getSpecialDayForMonth = (specialDay, displayYear, displayMonth) => {
-  const specialMonth = monthNameToIndex(specialDay.monthName);
-  const weekdayIndex = dayNameToIndex(specialDay.dayName);
-  const occurrenceIndex = getOccurrenceIndex(specialDay.occurrence);
+/* =========================
+   SPECIAL DAY LOGIC
+========================= */
+const findSpecialDay = (event, y, m) => {
+  const eventMonth = getMonthIndex(event.monthName);
+  if (eventMonth !== m) return null;
 
-  if (specialMonth !== displayMonth) {
-    return null;
-  }
+  const targetDay = getDayIndex(event.dayName);
+  const occ = getOccurrence(event.occurrence);
+  const daysInMonth = new Date(y, m + 1, 0).getDate();
 
-  const daysInMonth = new Date(displayYear, displayMonth + 1, 0).getDate();
+  let count = 0;
 
-  if (occurrenceIndex === -1) {
-    // last occurrence
-    for (let day = daysInMonth; day > 0; day--) {
-      const dateCandidate = new Date(displayYear, displayMonth, day);
-      if (dateCandidate.getDay() === weekdayIndex) {
-        return day;
-      }
+  // last occurrence
+  if (occ === -1) {
+    for (let d = daysInMonth; d >= 1; d--) {
+      if (new Date(y, m, d).getDay() === targetDay) return d;
     }
     return null;
   }
 
-  let matchCount = 0;
-  for (let day = 1; day <= daysInMonth; day++) {
-    const dateCandidate = new Date(displayYear, displayMonth, day);
-    if (dateCandidate.getDay() === weekdayIndex) {
-      matchCount += 1;
-      if (matchCount === occurrenceIndex) {
-        return day;
-      }
+  // first, second, third...
+  for (let d = 1; d <= daysInMonth; d++) {
+    if (new Date(y, m, d).getDay() === targetDay) {
+      count++;
+      if (count === occ) return d;
     }
   }
 
   return null;
 };
 
-const getSpecialDaysForDisplayMonth = () => {
-  return specialDaysData
-    .map((specialDay) => {
-      const dayNumber = getSpecialDayForMonth(specialDay, year, month);
-      if (dayNumber !== null) {
-        return {
-          day: dayNumber,
-          name: specialDay.name,
-          descriptionURL: specialDay.descriptionURL,
-        };
-      }
-      return null;
+// get all special days for current month
+const getSpecialDays = () =>
+  specialDaysData
+    .map((e) => {
+      const day = findSpecialDay(e, year, month);
+      if (!day) return null;
+
+      return {
+        day,
+        name: e.name,
+        url: e.descriptionURL
+      };
     })
     .filter(Boolean);
-};
 
-const positionTooltip = (event) => {
+/* =========================
+   TOOLTIP POSITION
+========================= */
+const moveTooltip = (e) => {
   const offset = 12;
-  const tooltipWidth = tooltip.offsetWidth;
-  const tooltipHeight = tooltip.offsetHeight;
-  const pageWidth = window.innerWidth;
-  const pageHeight = window.innerHeight;
 
-  let left = event.pageX + offset;
-  let top = event.pageY + offset;
+  let x = e.pageX + offset;
+  let y = e.pageY + offset;
 
-  if (left + tooltipWidth > pageWidth) {
-    left = event.pageX - tooltipWidth - offset;
-  }
-  if (top + tooltipHeight > pageHeight) {
-    top = event.pageY - tooltipHeight - offset;
-  }
+  const w = tooltip.offsetWidth;
+  const h = tooltip.offsetHeight;
 
-  tooltip.style.left = `${left}px`;
-  tooltip.style.top = `${top}px`;
+  if (x + w > window.innerWidth) x = e.pageX - w - offset;
+  if (y + h > window.innerHeight) y = e.pageY - h - offset;
+
+  tooltip.style.left = `${x}px`;
+  tooltip.style.top = `${y}px`;
 };
 
-const displayCalendar = () => {
-  firstDayIndex = new Date(year, month, 1).getDay();
-  datesOfMonth.innerHTML = "";
+/* =========================
+   RENDER CALENDAR
+========================= */
+const renderCalendar = () => {
+  calendarDays.innerHTML = "";
 
-  for (let i = 0; i < firstDayIndex; i++) {
-    datesOfMonth.innerHTML += `<li class="empty"></li>`;
+  const firstDay = new Date(year, month, 1).getDay();
+  const lastDay = new Date(year, month + 1, 0).getDate();
+
+  // empty boxes before first day
+  for (let i = 0; i < firstDay; i++) {
+    calendarDays.innerHTML += `<li class="empty"></li>`;
   }
 
-  const lastDateOfMonth = new Date(year, month + 1, 0).getDate();
-  const specialDays = getSpecialDaysForDisplayMonth();
-  const specialDayMap = specialDays.reduce((map, item) => {
-    map[item.day] = item;
-    return map;
-  }, {});
+  const specialMap = {};
+  getSpecialDays().forEach((item) => {
+    specialMap[item.day] = item;
+  });
 
-  for (let i = 1; i <= lastDateOfMonth; i++) {
-    const special = specialDayMap[i];
-    const specialClass = special ? " special-day" : "";
-    const dataAttributes = special ? `data-name="${special.name}"` : "";
-    const icon = special ? ` <span class="special-label">★</span>` : "";
-    datesOfMonth.innerHTML += `<li class="date-item${specialClass}" ${dataAttributes}>${i}${icon}</li>`;
+  // days
+  for (let d = 1; d <= lastDay; d++) {
+    const special = specialMap[d];
+
+    calendarDays.innerHTML += `
+      <li class="date-item ${special ? "special-day" : ""}"
+          data-name="${special?.name || ""}"
+          data-url="${special?.url || ""}">
+        ${d} ${special ? "★" : ""}
+      </li>
+    `;
   }
 
-  const specialDateElements = document.querySelectorAll(
-    ".date-item.special-day",
-  );
-  specialDateElements.forEach((dayElement) => {
-    const name = dayElement.dataset.name;
-    const url = dayElement.dataset.url;
+  // tooltip events
+  document.querySelectorAll(".special-day").forEach((el) => {
+    el.addEventListener("mouseenter", (e) => {
+      const text = el.dataset.url
+        ? `${el.dataset.name}\n${el.dataset.url}`
+        : el.dataset.name;
 
-    const hoverText = url ? `${name}\n${url}` : name;
-
-    dayElement.addEventListener("mouseenter", (event) => {
-      tooltip.textContent = hoverText;
+      tooltip.textContent = text;
       tooltip.classList.add("visible");
-      positionTooltip(event);
+      moveTooltip(e);
     });
 
-    dayElement.addEventListener("mousemove", positionTooltip);
-    dayElement.addEventListener("mouseleave", () => {
+    el.addEventListener("mousemove", moveTooltip);
+
+    el.addEventListener("mouseleave", () => {
       tooltip.classList.remove("visible");
     });
   });
-
-  const currentMonthName = new Date(year, month).toLocaleDateString("en-GB", {
-    month: "long",
-  });
-  monthAndYearText.textContent = `${currentMonthName}, ${year}`;
 };
 
-const populateMonthDropdown = () => {
-  let options = '<option value="">Month</option>';
-  months.forEach((monthName, index) => {
-    const isSelected = index === currentMonth ? " selected" : "";
-    options += `<option value="${index}"${isSelected}>${monthName}</option>`;
-  });
-  monthSelect.innerHTML = options;
+/* =========================
+   DROPDOWNS
+========================= */
+const fillMonths = () => {
+  monthSelect.innerHTML =
+    `<option disabled selected>Month</option>` +
+    months.map((m, i) => `<option value="${i}">${m}</option>`).join("");
+
+  monthSelect.value = month;
 };
 
-const populateYearDropdown = () => {
-  const yearStart = 1900;
-  const yearEnd = new Date().getFullYear();
-  let options = '<option value="">Year</option>';
-  for (let y = yearEnd; y >= yearStart; y--) {
-    const selected = y === currentYear ? " selected" : "";
-    options += `<option value="${y}"${selected}>${y}</option>`;
+const fillYears = () => {
+  const start = 0;
+  const end = 3000;
+
+  let html = `<option disabled selected>Year</option>`;
+
+  for (let y = end; y >= start; y--) {
+    html += `<option value="${y}">${y}</option>`;
   }
-  yearSelect.innerHTML = options;
+
+  yearSelect.innerHTML = html;
+  yearSelect.value = year;
 };
 
-// ==================== previous and next btn events;
-btnElements.forEach((btn) => {
+/* =========================
+   EVENTS
+========================= */
+
+// next/prev buttons
+buttons.forEach((btn) => {
   btn.addEventListener("click", () => {
-    month = btn.id === "previous-btn" ? month - 1 : month + 1;
+    month += btn.id === "previous-btn" ? -1 : 1;
+
     if (month < 0) {
-      year -= 1;
       month = 11;
+      year--;
     } else if (month > 11) {
-      year += 1;
       month = 0;
+      year++;
     }
 
-    yearSelect.value = `${year}`;
-    monthSelect.value = `${month}`;
+    monthSelect.value = month;
+    yearSelect.value = year;
 
-    todaysInfoBox.style.display = "none";
-    displayCalendar();
+    todayBox.style.display = "none";
+    todayBtn.style.display = "block";
+    renderCalendar();
   });
 });
 
+// dropdowns
 monthSelect.addEventListener("change", () => {
-  if (monthSelect.value !== "") {
-    month = parseInt(monthSelect.value, 10);
-    displayCalendar();
-  }
+  month = +monthSelect.value;
+  todayBox.style.display = "none";
+  todayBtn.style.display = "block";
+  renderCalendar();
 });
 
 yearSelect.addEventListener("change", () => {
-  const selectedYear = parseInt(yearSelect.value, 10);
-  if (!Number.isNaN(selectedYear)) {
-    year = selectedYear;
-    displayCalendar();
-  }
+  year = +yearSelect.value;
+  todayBox.style.display = "none";
+  todayBtn.style.display = "block";
+  renderCalendar();
 });
 
-populateMonthDropdown();
-populateYearDropdown();
-window.onload = displayCalendar;
+/* =========================
+   Today Button;
+========================= */
+todayBtn.addEventListener("click", () => {
+  const now = new Date();
+  year = now.getFullYear();
+  month = now.getMonth();
+
+  monthSelect.value = month;
+  yearSelect.value = year;
+
+  todayBox.style.display = "flex";
+  renderCalendar();
+  setTimeout(() => {
+    todayBtn.style.display = "none";
+  }, 2000);
+});
+
+/* =========================
+   INIT
+========================= */
+fillMonths();
+fillYears();
+renderCalendar();
