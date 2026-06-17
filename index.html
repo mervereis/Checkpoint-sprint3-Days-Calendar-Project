@@ -13,34 +13,31 @@
 
   <body>
     <main class="container">
-      <h1>Days Calendar</h1>
+      <h1>Day & Month Calendar</h1>
       <!-- ============ Previous and next icons -->
       <div style="width: 100%">
-        <div
-          class="head"
-          role="navigation"
-          aria-label="Calendar month navigation"
-        >
+        <div class="head">
           <button
-            class="pre-next-btn"
             id="previous-btn"
+            class="pre-next-btn"
             aria-label="Previous month"
           >
             <i class="fa-solid fa-arrow-left"></i>
           </button>
 
-          <select
-            name="monthSelect"
-            id="monthsSelection"
-            aria-label="Select month"
-          ></select>
-          <select
-            name="yearSelect"
-            id="yearsSelection"
-            aria-label="Select year"
-          ></select>
+          <div class="middle-controls">
+            <button id="today-btn" class="today-btn">Today</button>
 
-          <button class="pre-next-btn" id="next-btn" aria-label="Next month">
+            <div class="select-group">
+              <label for="monthsSelection">Month:</label>
+              <select id="monthsSelection"></select>
+
+              <label for="yearsSelection">Year:</label>
+              <select id="yearsSelection"></select>
+            </div>
+          </div>
+
+          <button id="next-btn" class="pre-next-btn" aria-label="Next month">
             <i class="fa-solid fa-arrow-right"></i>
           </button>
         </div>

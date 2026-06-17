@@ -10,6 +10,7 @@ const todayBox = document.querySelector(".today-box");
 const monthSelect = document.getElementById("monthsSelection");
 const yearSelect = document.getElementById("yearsSelection");
 const tooltip = document.getElementById("special-tooltip");
+const todayBtn = document.getElementById("today-btn");
 
 /* =========================
    DATE SETUP
@@ -210,7 +211,7 @@ const fillMonths = () => {
 
 const fillYears = () => {
   const start = 0;
-  const end = 9999;
+  const end = 3000;
 
   let html = `<option disabled selected>Year</option>`;
 
@@ -243,6 +244,7 @@ buttons.forEach((btn) => {
     yearSelect.value = year;
 
     todayBox.style.display = "none";
+    todayBtn.style.display = "block";
     renderCalendar();
   });
 });
@@ -251,13 +253,33 @@ buttons.forEach((btn) => {
 monthSelect.addEventListener("change", () => {
   month = +monthSelect.value;
   todayBox.style.display = "none";
+  todayBtn.style.display = "block";
   renderCalendar();
 });
 
 yearSelect.addEventListener("change", () => {
   year = +yearSelect.value;
   todayBox.style.display = "none";
+  todayBtn.style.display = "block";
   renderCalendar();
+});
+
+/* =========================
+   Today Button;
+========================= */
+todayBtn.addEventListener("click", () => {
+  const now = new Date();
+  year = now.getFullYear();
+  month = now.getMonth();
+
+  monthSelect.value = month;
+  yearSelect.value = year;
+
+  todayBox.style.display = "flex";
+  renderCalendar();
+  setTimeout(() => {
+    todayBtn.style.display = "none";
+  }, 2000);
 });
 
 /* =========================
