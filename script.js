@@ -1,8 +1,8 @@
-import { events as specialDaysData } from "./eventData.js";
+import {
+  months,
+  findSpecialDay
+} from "./calendarUtils.js";
 
-/* =========================
-   DOM ELEMENTS
-========================= */
 const todayText = document.getElementById("todays-day-date");
 const calendarDays = document.getElementById("dates-of-month");
 const buttons = document.querySelectorAll(".pre-next-btn");
@@ -12,107 +12,20 @@ const yearSelect = document.getElementById("yearsSelection");
 const tooltip = document.getElementById("special-tooltip");
 const todayBtn = document.getElementById("today-btn");
 
-/* =========================
-   DATE SETUP
-========================= */
+
 const now = new Date();
 
 let year = now.getFullYear();
 let month = now.getMonth();
 let date = now.getDate();
+let specialDaysData = [];
 
-/* =========================
-   CONSTANTS
-========================= */
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December"
-];
 
-const weekDays = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday"
-];
-
-/* =========================
-   TODAY TEXT
-========================= */
 const todayName = now.toLocaleDateString("en-GB", { weekday: "long" });
 
 todayText.textContent = `${todayName}, ${date}.${month + 1}.${year}`;
 
-/* =========================
-   HELPER FUNCTIONS
-========================= */
 
-// convert month name → index
-const getMonthIndex = (name) =>
-  months.findIndex((m) => m.toLowerCase() === name.toLowerCase());
-
-// convert weekday name → index
-const getDayIndex = (name) =>
-  weekDays.findIndex((d) => d.toLowerCase() === name.toLowerCase());
-
-// convert "first, second, last..." → number
-const getOccurrence = (type) => {
-  const map = {
-    first: 1,
-    second: 2,
-    third: 3,
-    fourth: 4,
-    last: -1
-  };
-  return map[type?.toLowerCase()] ?? 1;
-};
-
-/* =========================
-   SPECIAL DAY LOGIC
-========================= */
-const findSpecialDay = (event, y, m) => {
-  const eventMonth = getMonthIndex(event.monthName);
-  if (eventMonth !== m) return null;
-
-  const targetDay = getDayIndex(event.dayName);
-  const occ = getOccurrence(event.occurrence);
-  const daysInMonth = new Date(y, m + 1, 0).getDate();
-
-  let count = 0;
-
-  // last occurrence
-  if (occ === -1) {
-    for (let d = daysInMonth; d >= 1; d--) {
-      if (new Date(y, m, d).getDay() === targetDay) return d;
-    }
-    return null;
-  }
-
-  // first, second, third...
-  for (let d = 1; d <= daysInMonth; d++) {
-    if (new Date(y, m, d).getDay() === targetDay) {
-      count++;
-      if (count === occ) return d;
-    }
-  }
-
-  return null;
-};
-
-// get all special days for current month
 const getSpecialDays = () =>
   specialDaysData
     .map((e) => {
@@ -122,14 +35,11 @@ const getSpecialDays = () =>
       return {
         day,
         name: e.name,
-        url: e.descriptionURL
       };
     })
     .filter(Boolean);
 
-/* =========================
-   TOOLTIP POSITION
-========================= */
+
 const moveTooltip = (e) => {
   const offset = 12;
 
@@ -146,16 +56,14 @@ const moveTooltip = (e) => {
   tooltip.style.top = `${y}px`;
 };
 
-/* =========================
-   RENDER CALENDAR
-========================= */
+
 const renderCalendar = () => {
   calendarDays.innerHTML = "";
 
   const firstDay = new Date(year, month, 1).getDay();
   const lastDay = new Date(year, month + 1, 0).getDate();
 
-  // empty boxes before first day
+  
   for (let i = 0; i < firstDay; i++) {
     calendarDays.innerHTML += `<li class="empty"></li>`;
   }
@@ -165,27 +73,22 @@ const renderCalendar = () => {
     specialMap[item.day] = item;
   });
 
-  // days
+
   for (let d = 1; d <= lastDay; d++) {
     const special = specialMap[d];
 
     calendarDays.innerHTML += `
       <li class="date-item ${special ? "special-day" : ""}"
-          data-name="${special?.name || ""}"
-          data-url="${special?.url || ""}">
+          data-name="${special?.name || ""}">
         ${d} ${special ? "★" : ""}
       </li>
     `;
   }
 
-  // tooltip events
+
   document.querySelectorAll(".special-day").forEach((el) => {
     el.addEventListener("mouseenter", (e) => {
-      const text = el.dataset.url
-        ? `${el.dataset.name}\n${el.dataset.url}`
-        : el.dataset.name;
-
-      tooltip.textContent = text;
+      tooltip.textContent = el.dataset.name;
       tooltip.classList.add("visible");
       moveTooltip(e);
     });
@@ -198,9 +101,7 @@ const renderCalendar = () => {
   });
 };
 
-/* =========================
-   DROPDOWNS
-========================= */
+
 const fillMonths = () => {
   monthSelect.innerHTML =
     `<option disabled selected>Month</option>` +
@@ -223,11 +124,20 @@ const fillYears = () => {
   yearSelect.value = year;
 };
 
-/* =========================
-   EVENTS
-========================= */
 
-// next/prev buttons
+const ensureYearOption = (y) => {
+  if (!yearSelect.querySelector(`option[value="${y}"]`)) {
+    const option = document.createElement("option");
+    option.value = y;
+    option.textContent = y;
+    if (y > 3000) {
+      yearSelect.insertBefore(option, yearSelect.options[1]);
+    } else {
+      yearSelect.appendChild(option);
+    }
+  }
+};
+
 buttons.forEach((btn) => {
   btn.addEventListener("click", () => {
     month += btn.id === "previous-btn" ? -1 : 1;
@@ -240,6 +150,7 @@ buttons.forEach((btn) => {
       year++;
     }
 
+    ensureYearOption(year);
     monthSelect.value = month;
     yearSelect.value = year;
 
@@ -249,7 +160,7 @@ buttons.forEach((btn) => {
   });
 });
 
-// dropdowns
+
 monthSelect.addEventListener("change", () => {
   month = +monthSelect.value;
   todayBox.style.display = "none";
@@ -264,9 +175,7 @@ yearSelect.addEventListener("change", () => {
   renderCalendar();
 });
 
-/* =========================
-   Today Button;
-========================= */
+
 todayBtn.addEventListener("click", () => {
   const now = new Date();
   year = now.getFullYear();
@@ -282,9 +191,12 @@ todayBtn.addEventListener("click", () => {
   }, 2000);
 });
 
-/* =========================
-   INIT
-========================= */
-fillMonths();
-fillYears();
-renderCalendar();
+
+fetch("days.json")
+  .then((res) => res.json())
+  .then((data) => {
+    specialDaysData = data;
+    fillMonths();
+    fillYears();
+    renderCalendar();
+  });

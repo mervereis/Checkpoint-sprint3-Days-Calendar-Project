@@ -1,25 +1,15 @@
-/* =========================
-   RESET
-========================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
 }
-
-/* =========================
-   BASE
-========================= */
 body {
   background: #3a3d3b;
   color: whitesmoke;
   padding: clamp(10px, 2vw, 20px);
 }
 
-/* =========================
-   MAIN CONTAINER
-========================= */
 .container {
   background: #734f4f;
   width: 100%;
@@ -39,28 +29,23 @@ body {
   font-size: clamp(1.5rem, 4vw, 1.8rem);
 }
 
-/* =========================
-   HEADER (NAVIGATION)
-========================= */
 .head {
   width: 100%;
   display: flex;
-  justify-content: space-between; /* keeps prev left, next right */
+  justify-content: space-between;
   align-items: center;
   padding: clamp(10px, 3vw, 15px);
 }
 
-/* Middle section: Today + selects */
 .middle-controls {
   display: flex;
   align-items: center;
-  gap: clamp(8px, 2vw, 15px); /* space between Today and the selects */
+  gap: clamp(8px, 2vw, 15px);
 }
 
-/* Month + Year spacing */
 .select-group {
   display: flex;
-  gap: clamp(6px, 2vw, 10px); /* your requested spacing */
+  gap: clamp(6px, 2vw, 10px);
   align-items: center;
 }
 
@@ -97,9 +82,6 @@ body {
   background: #8bc0f5;
 }
 
-/* =========================
-   TODAY BOX
-========================= */
 .today-box {
   width: 92%;
   background: #5b3939;
@@ -126,9 +108,6 @@ body {
   font-size: clamp(0.8rem, 2vw, 1rem);
 }
 
-/* =========================
-   WEEK DAYS
-========================= */
 .days-of-week-box {
   width: 100%;
   padding: clamp(6px, 2vw, 10px) 0;
@@ -151,9 +130,6 @@ body {
   padding-bottom: clamp(4px, 1vw, 6px);
 }
 
-/* =========================
-   CALENDAR GRID
-========================= */
 .dates-of-month {
   width: 100%;
   padding: clamp(6px, 2vw, 10px);
@@ -181,9 +157,6 @@ body {
   background: #71aae8;
 }
 
-/* =========================
-   SPECIAL DAYS
-========================= */
 .date-item.special-day {
   background: #ffcc00;
   color: #3a3d3b;
@@ -191,14 +164,6 @@ body {
   position: relative;
 }
 
-.special-label {
-  margin-left: 4px;
-  font-size: clamp(0.7rem, 2vw, 0.8rem);
-}
-
-/* =========================
-   TOOLTIP
-========================= */
 .tooltip {
   position: absolute;
   z-index: 1000;
@@ -222,16 +187,6 @@ body {
   opacity: 1;
 }
 
-/* =========================
-   ACTIVE STATE
-========================= */
-.active {
-  background: #71aae8;
-}
-
-/* =========================
-   SELECTS
-========================= */
 #monthsSelection,
 #yearsSelection {
   padding: clamp(10px, 2vw, 12px) clamp(12px, 3vw, 16px);
@@ -247,9 +202,6 @@ body {
   cursor: pointer;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
 @media (max-width: 580px) {
   .head {
     flex-direction: column;

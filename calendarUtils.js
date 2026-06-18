@@ -13,7 +13,7 @@ export const months = [
   "December"
 ];
 
-export const weekDays = [
+const weekDays = [
   "Sunday",
   "Monday",
   "Tuesday",
@@ -23,10 +23,10 @@ export const weekDays = [
   "Saturday"
 ];
 
-export const getMonthIndex = (name) =>
+const getMonthIndex = (name) =>
   months.findIndex((m) => m.toLowerCase() === name.toLowerCase());
 
-export const getDayIndex = (name) =>
+const getDayIndex = (name) =>
   weekDays.findIndex((d) => d.toLowerCase() === name.toLowerCase());
 
 export const getOccurrence = (type) => {
